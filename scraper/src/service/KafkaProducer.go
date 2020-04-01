@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cemayan/earthquake_collector/scraper/src/types"
-	"github.com/cemayan/earthquake_collector/scraper/src/types/Earthquake"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/types"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/types/Earthquake"
 	"github.com/segmentio/kafka-go"
 )
 

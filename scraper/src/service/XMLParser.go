@@ -5,7 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"github.com/cemayan/earthquake_collector/scraper/src/types/Earthquake"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/types/Earthquake"
 	"golang.org/x/net/html/charset"
 )
 

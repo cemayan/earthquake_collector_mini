@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/cemayan/earthquake_collector/scraper/src/service"
-	"github.com/cemayan/earthquake_collector/scraper/src/types"
-	"github.com/cemayan/earthquake_collector/scraper/src/util"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/service"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/types"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/util"
 	"github.com/jasonlvhit/gocron"
 )
 

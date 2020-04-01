@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/allegro/bigcache"
-	"github.com/cemayan/earthquake_collector/scraper/src/types"
+	"github.com/cemayan/earthquake_collector_mini/scraper/src/types"
 )
 
 // ScheduleJob comment
