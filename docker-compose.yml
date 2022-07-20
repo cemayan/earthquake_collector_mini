@@ -1,0 +1,37 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    hostname: zk_eq
+    container_name: zk_eq
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:latest
+    hostname: kafka_eq
+    container_name: kafka_eq
+    ports:
+      - "9094:9094"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zk_eq:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "earthquake:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  scraper:
+    build: .
+    ports:
+      - "8085:8085"
+    environment:
+      - BOOTSTRAP_SERVER_PROD=kafka_eq:9094
+      - ENV=prod
+      - SCHEDULE_INTERVAL_PROD=30
+      - SCHEDULE_UNIT_PROD=SECOND
+      - TOPIC_ID_PROD=earthquake
+      - XML_ADDRESS_PROD=http://udim.koeri.boun.edu.tr/zeqmap/xmlt/son24saat.xml
+    depends_on:
+      - zookeeper
+      - kafka
