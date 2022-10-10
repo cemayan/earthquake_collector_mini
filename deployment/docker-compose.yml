@@ -22,7 +22,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   scraper:
-    build: ..
+    build:
+      context: ../
+      dockerfile: build/Dockerfile
+    container_name: scraper
+    hostname: scraper
     ports:
       - "8085:8085"
     environment:
