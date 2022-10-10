@@ -1,0 +1,7 @@
+SCHEDULE_UNIT: SECOND
+SCHEDULE_INTERVAL: 30
+TOPIC_ID: earthquake
+BOOTSTRAP_SERVER: localhost:9092
+GOARCH: arm64
+GOOS: darwin
+XML_ADDRESS: "http://udim.koeri.boun.edu.tr/zeqmap/xmlt/son24saat.xml"

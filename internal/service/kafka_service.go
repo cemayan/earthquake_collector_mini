@@ -5,6 +5,10 @@ import (
 	"log"
 )
 
+type KafkaService interface {
+	KafkaProducer(lastEq []byte)
+}
+
 type KafkaSvc struct {
 	kafkaConn *kafka.Conn
 }

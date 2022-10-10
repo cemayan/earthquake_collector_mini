@@ -5,20 +5,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/allegro/bigcache"
-	"github.com/cemayan/earthquake_collector_mini/src/config"
+	"github.com/cemayan/earthquake_collector_mini/config"
 )
+
+// ScheduleJob comment
+type ScheduleService interface {
+	ScheduleJob()
+}
 
 type SchedulerSvc struct {
 	cacheManager *bigcache.BigCache
 	xmlService   XMLService
 	kafkaService KafkaService
+	configs      *config.AppConfig
 }
 
 func (s SchedulerSvc) ScheduleJob() {
 
-	configs := config.GetConfig()
-
-	data := s.xmlService.Fetch(configs.XML_ADDRESS)
+	data := s.xmlService.Fetch(s.configs.XML_ADDRESS)
 	fmt.Println("Operation completed!")
 	parsedData := s.xmlService.Parse(data)
 
@@ -35,6 +39,6 @@ func (s SchedulerSvc) ScheduleJob() {
 	}
 }
 
-func NewSchedulerService(cacheManager *bigcache.BigCache, xmlService XMLService, kafkaService KafkaService) ScheduleService {
-	return &SchedulerSvc{cacheManager: cacheManager, xmlService: xmlService, kafkaService: kafkaService}
+func NewSchedulerService(cacheManager *bigcache.BigCache, xmlService XMLService, kafkaService KafkaService, configs *config.AppConfig) ScheduleService {
+	return &SchedulerSvc{cacheManager: cacheManager, xmlService: xmlService, kafkaService: kafkaService, configs: configs}
 }

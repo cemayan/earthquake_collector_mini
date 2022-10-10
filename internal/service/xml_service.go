@@ -4,11 +4,16 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
-	"github.com/cemayan/earthquake_collector_mini/src/types/earthquake"
+	"github.com/cemayan/earthquake_collector_mini/internal/types/earthquake"
 	"golang.org/x/net/html/charset"
 	"io/ioutil"
 	"net/http"
 )
+
+type XMLService interface {
+	Fetch(url string) []byte
+	Parse(data []byte) []earthquake.Earthquake
+}
 
 type XMLSvc struct {
 }
