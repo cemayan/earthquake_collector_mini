@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"github.com/cemayan/earthquake_collector_mini/pkg/common"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -20,11 +21,10 @@ type Config struct {
 type AppConfig struct {
 	SCHEDULE_UNIT     string
 	SCHEDULE_INTERVAL string
-	TOPIC_ID          string
-	BOOTSTRAP_SERVER  string
 	XML_ADDRESS       string
 	GOARCH            string
 	GOOS              string
+	Kafka             common.Kafka
 }
 
 // Load config file from given path

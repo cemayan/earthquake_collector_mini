@@ -1,7 +1,10 @@
 package service
 
 import (
-	"github.com/segmentio/kafka-go"
+	"github.com/cemayan/earthquake_collector_mini/pkg/kafka"
+	"github.com/google/uuid"
+	kafka_ "github.com/segmentio/kafka-go"
+	"golang.org/x/net/context"
 	"log"
 )
 
@@ -10,21 +13,23 @@ type KafkaService interface {
 }
 
 type KafkaSvc struct {
-	kafkaConn *kafka.Conn
+	kafkaHandler kafka.KafkaHandler
 }
 
 func (k KafkaSvc) KafkaProducer(lastEq []byte) {
-	_, err := k.kafkaConn.Write(lastEq)
+	kafkaWriter := k.kafkaHandler.GetKafkaWriter()
+	defer kafkaWriter.Close()
 
+	msg := kafka_.Message{
+		Key:   []byte(uuid.New().String()),
+		Value: lastEq,
+	}
+	err := kafkaWriter.WriteMessages(context.Background(), msg)
 	if err != nil {
 		log.Fatal("failed to write messages:", err)
 	}
-
-	if err := k.kafkaConn.Close(); err != nil {
-		log.Fatal("failed to close writer:", err)
-	}
 }
 
-func NewKafkaService(kafkaConn *kafka.Conn) KafkaService {
-	return &KafkaSvc{kafkaConn: kafkaConn}
+func NewKafkaService(kafkaHandler kafka.KafkaHandler) KafkaService {
+	return &KafkaSvc{kafkaHandler: kafkaHandler}
 }

@@ -2,8 +2,9 @@ package main
 
 import (
 	"github.com/cemayan/earthquake_collector_mini/config"
-	client2 "github.com/cemayan/earthquake_collector_mini/internal/client"
 	service2 "github.com/cemayan/earthquake_collector_mini/internal/service"
+	"github.com/cemayan/earthquake_collector_mini/pkg/bigcache"
+	"github.com/cemayan/earthquake_collector_mini/pkg/kafka"
 	"github.com/jasonlvhit/gocron"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -14,6 +15,8 @@ import (
 var _log *logrus.Logger
 var configs *config.AppConfig
 var v *viper.Viper
+var kafkaHandler kafka.KafkaHandler
+var cacheHandler bigcache.BigcacheHandler
 
 func init() {
 
@@ -31,13 +34,15 @@ func init() {
 		return
 	}
 
+	kafkaHandler = kafka.NewKafkaHandler(configs)
+	cacheHandler = bigcache.NewBigcacheHandler()
+
 }
 
 func main() {
 
-	cacheManager := client2.InitCache()
+	cacheManager := cacheHandler.New()
 	scheduler := gocron.NewScheduler()
-	kafkaConn := client2.NewKafkaClient(configs)
 
 	interval, _ := strconv.ParseUint(configs.SCHEDULE_INTERVAL, 0, 64)
 
@@ -45,7 +50,7 @@ func main() {
 	xmlSvc = service2.NewXMLService()
 
 	var kafkaSvc service2.KafkaService
-	kafkaSvc = service2.NewKafkaService(kafkaConn)
+	kafkaSvc = service2.NewKafkaService(kafkaHandler)
 
 	var schedulerSvc service2.ScheduleService
 	schedulerSvc = service2.NewSchedulerService(cacheManager, xmlSvc, kafkaSvc, configs)

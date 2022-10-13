@@ -8,12 +8,14 @@
 **Start** :
 
 ```bash
+cd deployment
 docker-compose up --build
 ```
 
 **Stop**:
 
 ```bash
+cd deployment
 docker-compose down -v --rmi all --remove-orphans
 ```
 

@@ -1,8 +1,8 @@
-package client
+package bigcache
 
 import (
 	"github.com/allegro/bigcache"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -17,8 +17,13 @@ var bcConfig = bigcache.Config{
 	OnRemoveWithReason: nil,
 }
 
-// InitCache comment
-func InitCache() *bigcache.BigCache {
+type BigcacheHandler interface {
+	New() *bigcache.BigCache
+}
+type BigcacheSvc struct {
+}
+
+func (b BigcacheSvc) New() *bigcache.BigCache {
 	cache, err := bigcache.NewBigCache(bcConfig)
 
 	if err != nil {
@@ -26,4 +31,8 @@ func InitCache() *bigcache.BigCache {
 	}
 
 	return cache
+}
+
+func NewBigcacheHandler() BigcacheHandler {
+	return &BigcacheSvc{}
 }
