@@ -1,0 +1,8 @@
+SCHEDULE_UNIT: SECOND
+SCHEDULE_INTERVAL: 30
+GOARCH: arm64
+GOOS: darwin
+XML_ADDRESS: "http://udim.koeri.boun.edu.tr/zeqmap/xmlt/son24saat.xml"
+kafka:
+  OUTBOX_TOPIC: earthquake-test
+  URL: localhost:9092

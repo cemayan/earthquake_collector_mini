@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"github.com/cemayan/earthquake_collector_mini/pkg/common"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -69,8 +70,11 @@ func (cfg Config) GetConfig(env string) (*AppConfig, error) {
 		path = "./app/config/config-docker"
 	} else if env == "prod" {
 		path = "./app/config/config-prod"
+	} else if env == "test" {
+		path = "../config/config-test"
 	}
 
+	fmt.Println(path)
 	v, err := cfg.LoadConfig(path)
 	if err != nil {
 		return nil, err
