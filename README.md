@@ -1,7 +1,6 @@
 # earthquake_collector-mini
 
-- Deprem verilerini verilen aralıkta http://udim.koeri.boun.edu.tr/zeqmap/xmlt/son24saat.xml adresinden çekerek yeni bir deprem varsa bunu **Kafka**'da bir topic'e(**earthquake**) yazar.
-
+-  It pulls earthquake data from http://udim.koeri.boun.edu.tr/zeqmap/xmlt/son24saat.xml and writes it to a topic in **Kafka** if there is a new earthquake.
 
 ## Kafka & Zookeeper &  Scraper 
 
@@ -23,8 +22,8 @@ docker-compose down -v --rmi all --remove-orphans
 
 ### **Kafka** 
 
-Yardımcı olması için aşağıdaki komutlarla kafkaya yazılan eventleri görebilirsiniz.
-
+You
+You can see kafka posts events with commands to help.
 **Bash**:
 
 ```bash
